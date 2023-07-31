@@ -21,7 +21,8 @@ Content-Type: application/json
 {
     "name" : "Walid",
     "subscribedToChannel" : "Web Dev"
-}{
+}
+{
     "name" : "Walid",
     "subscribedToChannel" : "Web Dev"
 }
