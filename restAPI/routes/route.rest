@@ -10,6 +10,18 @@ POST  http://localhost:3000/subscribers
 Content-Type: application/json
 
 {
-    "name" : "Amazing Person",
+    "name" : "Walid",
+    "subscribedToChannel" : "Web Dev"
+}
+###
+
+DELETE  http://localhost:3000/subscribers
+Content-Type: application/json
+
+{
+    "name" : "Walid",
+    "subscribedToChannel" : "Web Dev"
+}{
+    "name" : "Walid",
     "subscribedToChannel" : "Web Dev"
 }
