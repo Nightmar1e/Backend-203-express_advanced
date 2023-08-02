@@ -21,6 +21,13 @@
       <input type="email" id="email" name="email" required>
       <label for="password">Password:</label>
       <input type="password" id="password" name="password" required>
+
+      <% if (messages.error) { %>
+        <div class="error-message">
+          <%= messages.error %>
+        </div>
+      <% } %>
+
       <button type="submit">Login</button>
     </form>
   </main>

@@ -11,12 +11,12 @@ if (process.env.NODE_ENV !== 'production') {
   const methodOverride = require('method-override');
   const mongoose = require('mongoose'); // Import Mongoose
   
-  const initializePassport = require('./passport-config.js');
-  initializePassport(
-    passport,
-    email => User.findOne({ email: email }), // Use Mongoose to find user by email
-    id => User.findById(id) // Use Mongoose to find user by ID
-  );
+  // const initializePassport = require('./passport-config.js');
+  // initializePassport(
+  //   passport,
+  //   email => User.findOne({ email: email }), // Use Mongoose to find user by email
+  //   id => User.findById(id) // Use Mongoose to find user by ID
+  // );
   
   // Mongoose User schema
   const userSchema = new mongoose.Schema({
@@ -26,14 +26,27 @@ if (process.env.NODE_ENV !== 'production') {
   });
   
   const User = mongoose.model('User', userSchema);
+
+  passport.serializeUser((user, done) => {
+    done(null, user.id);
+  });
+  
+  passport.deserializeUser((id, done) => {
+    User.findById(id)
+      .then((user) => {
+        done(null, user);
+      })
+      .catch((err) => {
+        done(err, null);
+      });
+  });
+  
   
   mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/myapp', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
-  
-  const users = [];
-  
+    
   app.set('view-engine', 'ejs');
   app.use(express.urlencoded({ extended: false }));
   app.use(flash());
@@ -51,20 +64,54 @@ if (process.env.NODE_ENV !== 'production') {
   // Serve static files from the "public" directory
   app.use(express.static('public'));
   
-  app.get('/', checkAuthenticated, (req, res) => {
-    res.render('index.ejs', { name: req.user });
+  app.get('/', (req, res) => {
+    res.render('index.ejs', { name: req.user.name });
   });
   
-  app.get('/login', checkNotAuthenticated, (req, res) => {
+  app.get('/login', (req, res) => {
     res.render('login.ejs');
   });
+
+  app.post('/login', async (req, res) => {
+    const { email, password } = req.body;
   
-  app.post('/login', checkNotAuthenticated, passport.authenticate('local', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: true
-  }));
+    try {
+      // Find the user by email in the database
+      const user = await User.findOne({ email });
   
+      if (!user) {
+        // If the user does not exist, show an error flash message and redirect to /login
+        req.flash('error', 'No user with that email!');
+        return res.redirect('/login');
+      }
+  
+      // Check the password using bcrypt compare
+      const isPasswordCorrect = await bcrypt.compare(password, user.password);
+  
+      if (!isPasswordCorrect) {
+        // If the password is incorrect, show an error flash message and redirect to /login
+        req.flash('error', 'Incorrect password');
+        return res.redirect('/login');
+      }
+  
+      // If both email and password are correct, log the user in
+      req.logIn(user, (err) => {
+        if (err) {
+          console.error('Error logging in the user:', err);
+          return res.redirect('/login');
+        }
+        console.log('User logged in:', user);
+        return res.redirect('/');
+      });
+    } catch (error) {
+      // Catch any unexpected errors and log them
+      console.error('Unexpected error during login:', error);
+      res.redirect('/login');
+    }
+  });
+  
+
+
   app.get('/register', checkNotAuthenticated, (req, res) => {
     res.render('register.ejs');
   });
@@ -77,7 +124,7 @@ if (process.env.NODE_ENV !== 'production') {
         email: req.body.email,
         password: hashedPassword,
       });
-      await newUser.save(); // Save the new user to MongoDB
+      await newUser.save(); 
       res.redirect('/login');
     } catch {
       res.redirect('/register');
@@ -90,13 +137,16 @@ if (process.env.NODE_ENV !== 'production') {
   //   res.redirect('/login');
   // });
   
-  function checkAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-      return next();
-    }
+
+
+
+  // function checkAuthenticated(req, res, next) {
+  //   if (req.isAuthenticated()) {
+  //     return next();
+  //   }
   
-    res.redirect('/login');
-  }
+  //   res.redirect('/login');
+  // }
   
   function checkNotAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
@@ -105,5 +155,5 @@ if (process.env.NODE_ENV !== 'production') {
     next();
   }
   
-  app.listen(3005);
+  app.listen(3000, () => console.log('http://localhost:3000'))
   

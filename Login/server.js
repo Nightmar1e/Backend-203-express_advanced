@@ -8,7 +8,7 @@ if (process.env.NODE_ENV !== 'production') {
   const passport = require('passport');
   const flash = require('express-flash');
   const session = require('express-session');
-  const methodOverride = require('method-override')
+  const methodOverride = require('method-override');
   
   const initializePassport = require('./passport-config.js');
 
@@ -18,12 +18,8 @@ if (process.env.NODE_ENV !== 'production') {
     id => users.find(user => user.id === id)
   );
   
-  const users = [
-    { id: 1, email: 'user1@example.com', password: 'hashedPassword1' },
-    { id: 2, email: 'user2@example.com', password: 'hashedPassword2' },
-    // More user objects...
-  ];
-  
+  const users = [];
+
   app.set('view-engine', 'ejs');
   app.use(express.urlencoded({ extended: false }));
   app.use(flash());
