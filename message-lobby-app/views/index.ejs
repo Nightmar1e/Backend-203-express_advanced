@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Message Lobby</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <h1>Message Lobby</h1>
+  <form action="/create-lobby" method="POST">
+    <input type="text" name="lobbyName" placeholder="Enter lobby name" required>
+    <button type="submit">Create Lobby</button>
+  </form>
+  <ul>
+    <% for (const lobby of lobbies) { %>
+      <li><a href="/lobby/<%= lobby.id %>"><%= lobby.name %></a></li>
+    <% } %>
+  </ul>
+</body>
+</html>
