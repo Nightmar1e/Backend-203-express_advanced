@@ -27,6 +27,14 @@ if (process.env.NODE_ENV !== 'production') {
   
   const User = mongoose.model('User', userSchema);
 
+  const messageSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    content: { type: String, required: true },
+  });
+  
+  const Message = mongoose.model('Message', messageSchema);
+
   passport.serializeUser((user, done) => {
     done(null, user.id);
   });
@@ -64,9 +72,16 @@ if (process.env.NODE_ENV !== 'production') {
   // Serve static files from the "public" directory
   app.use(express.static('public'));
   
-  app.get('/', (req, res) => {
-    res.render('index.ejs', { name: req.user.name });
+  app.get('/', async (req, res) => {
+    try {
+      const messages = await Message.find({});
+      res.render('index.ejs', { name: req.user.name, messages: messages });
+    } catch (err) {
+      console.error('Error fetching messages:', err);
+      res.redirect('/');
+    }
   });
+  
   
   app.get('/login', (req, res) => {
     res.render('login.ejs');
