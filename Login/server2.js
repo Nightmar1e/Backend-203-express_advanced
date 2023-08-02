@@ -81,7 +81,7 @@ if (process.env.NODE_ENV !== 'production') {
       res.redirect('/');
     }
   });
-  
+
   
   app.get('/login', (req, res) => {
     res.render('login.ejs');
@@ -95,7 +95,7 @@ if (process.env.NODE_ENV !== 'production') {
       const user = await User.findOne({ email });
   
       if (!user) {
-        // If the user does not exist, show an error flash message and redirect to /login
+        // If the user does not exist, show an error flash message and redirect to /login, NO PUEEDO
         req.flash('error', 'No user with that email!');
         return res.redirect('/login');
       }
@@ -104,12 +104,12 @@ if (process.env.NODE_ENV !== 'production') {
       const isPasswordCorrect = await bcrypt.compare(password, user.password);
   
       if (!isPasswordCorrect) {
-        // If the password is incorrect, show an error flash message and redirect to /login
+        // If the password is incorrect, show an error flash message and redirect to /login, PERDON
         req.flash('error', 'Incorrect password');
         return res.redirect('/login');
       }
   
-      // If both email and password are correct, log the user in
+      // If both email and password are correct, log the user in, DISCULPE
       req.logIn(user, (err) => {
         if (err) {
           console.error('Error logging in the user:', err);
