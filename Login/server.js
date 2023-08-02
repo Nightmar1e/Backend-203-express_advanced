@@ -11,13 +11,18 @@ if (process.env.NODE_ENV !== 'production') {
   const methodOverride = require('method-override')
   
   const initializePassport = require('./passport-config.js');
+
   initializePassport(
     passport,
     email => users.find(user => user.email === email),
     id => users.find(user => user.id === id)
   );
   
-  const users = [];
+  const users = [
+    { id: 1, email: 'user1@example.com', password: 'hashedPassword1' },
+    { id: 2, email: 'user2@example.com', password: 'hashedPassword2' },
+    // More user objects...
+  ];
   
   app.set('view-engine', 'ejs');
   app.use(express.urlencoded({ extended: false }));
@@ -89,5 +94,5 @@ if (process.env.NODE_ENV !== 'production') {
   }
   
   
-  app.listen(3001);
+  app.listen(3000);
   
