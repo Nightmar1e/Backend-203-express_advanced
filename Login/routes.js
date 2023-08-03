@@ -5,9 +5,9 @@ const passport = require('passport');
 const flash = require('express-flash');
 const session = require('express-session');
 const methodOverride = require('method-override');
-const mongoose = require('mongoose'); // Import Mongoose
-const User = require('./models/user.js'); // Import Mongoose User model
-const Message = require('./models/message'); // Import Mongoose Message model
+const mongoose = require('mongoose'); 
+const User = require('./models/user.js'); 
+const Message = require('./models/message');
 
 // ... (other route-specific code)
 passport.serializeUser((user, done) => {
