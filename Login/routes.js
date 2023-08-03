@@ -56,6 +56,37 @@ app.get('/', async (req, res) => {
     }
   });
 
+  // POST route to handle form submission and save new message to the database
+  app.post('/', async (req, res) => {
+    try {
+      // if (!req.isAuthenticated()) {
+      //   return res.redirect('/login');
+      // }
+
+  
+      const { content } = req.body;
+  
+      // Get the user's name and email from the authenticated session
+      const userName = req.user.name;
+  
+      // Create a new message instance and associate it with the user's name and email
+      const newMessage = new Message({
+        name: userName,
+        content: content,
+      });
+      console.log('New user121:');
+
+      // Save the new message to the database
+      await newMessage.save();
+      console.log('New message saved successfully:', newMessage);
+  
+      // After saving the new message, redirect back to the main page to display all messages
+      res.redirect('/');
+    } catch (err) {
+      console.error('Error saving new message:', err);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  });
   
   app.get('/login', (req, res) => {
     res.render('login.ejs');
