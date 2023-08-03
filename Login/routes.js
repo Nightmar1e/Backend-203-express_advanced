@@ -25,13 +25,21 @@ passport.serializeUser((user, done) => {
   });
   
 
-//
-function checkNotAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-      return res.redirect('/');
-    }
-    next();
-  }
+//authetification function
+
+ // function checkAuthenticated(req, res, next) {
+  //   if (req.isAuthenticated()) {
+  //     return next();
+  //   }
+  
+  //   res.redirect('/login');
+  // }
+// function checkNotAuthenticated(req, res, next) {
+//     if (req.isAuthenticated()) {
+//       return res.redirect('/');
+//     }
+//     next();
+//   }
 
 // Define routes here
 app.get('/', async (req, res) => {
@@ -93,11 +101,11 @@ app.get('/', async (req, res) => {
   
 
 
-  app.get('/register', checkNotAuthenticated, (req, res) => {
+  app.get('/register', (req, res) => { // checkNotAuthenticated
     res.render('register.ejs');
   });
   
-  app.post('/register', checkNotAuthenticated, async (req, res) => {
+  app.post('/register', async (req, res) => {   // checkNotAuthenticated
     try {
       const hashedPassword = await bcrypt.hash(req.body.password, 10);
       const newUser = new User({
