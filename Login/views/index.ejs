@@ -8,10 +8,11 @@
 </head>
 <body>
   <header>
-    <h1>Welcome to our website <%= name %></h1>
+    <h1>Welcome <%= name %></h1>
     <nav>
       <a href="/">Home</a>
       <a href="/login">Login with another account</a>
+      <a href="/logout">Logout (to be added) 🥲</a>
     </nav>
   </header>
   <main>
@@ -20,7 +21,6 @@
       <thead>
         <tr>
           <th>Name</th>
-          <th>Email</th>
           <th>Message</th>
         </tr>
       </thead>
@@ -28,12 +28,18 @@
         <% messages.forEach((message) => { %>
           <tr>
             <td><%= message.name %></td>
-            <td><%= message.email %></td>
             <td><%= message.content %></td>
           </tr>
         <% }); %>
       </tbody>
     </table>
+    <h2>Add a New Message</h2>
+    <form action="/" method="post"> 
+      <label for="content">Message:</label>
+      <input type="text" id="content" name="content" required>
+      <br>
+      <input type="submit" value="Submit">
+    </form>
   </main>
 </body>
 </html>
