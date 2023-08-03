@@ -33,13 +33,37 @@
         <% }); %>
       </tbody>
     </table>
-    <h2>Add a New Message</h2>
-    <form action="/" method="post"> 
+    <h2 class="animated-heading">Add a New Message</h2>
+    <form action="/" method="post" class="animated-form"> 
       <label for="content">Message:</label>
       <input type="text" id="content" name="content" required>
       <br>
       <input type="submit" value="Submit">
     </form>
   </main>
+  <script>
+    const form = document.querySelector(".animated-form");
+    const heading = document.querySelector(".animated-heading");
+  
+    function isElementInViewport(el) {
+      const rect = el.getBoundingClientRect();
+      return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+      );
+    }
+  
+    function handleScroll() {
+      if (isElementInViewport(form)) {
+        form.classList.add("animated");
+        heading.classList.add("animated");
+        window.removeEventListener("scroll", handleScroll);
+      }
+    }
+  
+    window.addEventListener("scroll", handleScroll);
+  </script>
 </body>
 </html>
