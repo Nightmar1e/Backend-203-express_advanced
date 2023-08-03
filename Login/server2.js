@@ -29,7 +29,7 @@ if (process.env.NODE_ENV !== 'production') {
   async function getAllMessages() {
     try {
       const messages = await Message.find();
-      console.log('All messages:', messages);
+      // console.log('All messages:', messages);
     } catch (err) {
       console.error('Error retrieving messages:', err);
     }
