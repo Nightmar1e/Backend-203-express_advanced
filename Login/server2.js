@@ -35,7 +35,19 @@ if (process.env.NODE_ENV !== 'production') {
     }
   }
   getAllMessages();
+  // to get 10 last only
+  // async function getLast10Messages() {
+  //   try {
+  //     const messages = await Message.find().sort({ timestamp: -1 }).limit(10);
+  //     console.log('Last 10 messages:', messages);
+  //   } catch (err) {
+  //     console.error('Error retrieving last 10 messages:', err);
+  //   }
+  // }
   
+  // getLast10Messages();
+
+
 
 
   // const initializePassport = require('./passport-config.js');
