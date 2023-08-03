@@ -13,6 +13,31 @@ if (process.env.NODE_ENV !== 'production') {
   const routes = require('./routes'); // Import the routes from the routes.js
 
   
+  const Message = require('./models/message'); // Replace './models/message' with the actual path to your message.js file
+
+  // Assuming you already established a MongoDB connection using mongoose.connect()
+  
+  // Find and display all documents in the "messages" collection
+  // Message.find({})
+  // .then((messages) => {
+  //   console.log('All messages:', messages);
+  // })
+  // .catch((error) => {
+  //   console.error('Error fetching messages:', error);
+  // });;
+
+  async function getAllMessages() {
+    try {
+      const messages = await Message.find();
+      console.log('All messages:', messages);
+    } catch (err) {
+      console.error('Error retrieving messages:', err);
+    }
+  }
+  getAllMessages();
+  
+
+
   // const initializePassport = require('./passport-config.js');
   // initializePassport(
   //   passport,
@@ -54,5 +79,27 @@ app.use(express.static('public'));
 
 // Import the routes from the routes.js file
 app.use(routes);
+
+// const message1 = new Message({ name: 'John Doe', content: 'Hello, how are you?' });
+// const message2 = new Message({ name: 'Alice', content: 'Hi there!' });
+
+// Inserting messages into MongoDB using promises
+// message1.save()
+//   .then(savedMessage1 => {
+//     console.log('Message 1 saved successfully:', savedMessage1);
+//   })
+//   .catch(err => {
+//     console.error('Error saving message 1:', err);
+//   });
+
+// message2.save()
+//   .then(savedMessage2 => {
+//     console.log('Message 2 saved successfully:', savedMessage2);
+//   })
+//   .catch(err => {
+//     console.error('Error saving message 2:', err);
+//   });
+
+
 
 app.listen(3000, () => console.log('http://localhost:3000'));
