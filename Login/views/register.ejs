@@ -15,10 +15,11 @@
       <a href="/register">Register</a>
     </nav>
   </header>
-  <main>
-    <form action="/register" method="POST">
+  <main class="register-page">
+    <h2 class="animated-heading">Create an Account</h2>
+    <form action="/register" method="POST" class="animated-form">
       <label for="name">Name:</label>
-      <input type="name" id="name" name="name" required>
+      <input type="text" id="name" name="name" required>
       <label for="email">Email:</label>
       <input type="email" id="email" name="email" required>
       <label for="password">Password:</label>
@@ -26,5 +27,5 @@
       <button type="submit">Register</button>
     </form>
   </main>
-</body>
+  </body>
 </html>

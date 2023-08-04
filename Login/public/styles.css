@@ -47,10 +47,13 @@ main {
 h2 {
   margin-top: 2rem;
   font-size: 2rem;
-  color: #6f42c1;
-  border-bottom: 2px solid #6f42c1;
   padding-bottom: 0.5rem;
 }
+
+/* Styles for different pages */
+.home-page h2 { color: #002895; border-bottom: 2px solid #002895; }
+.register-page h2 { color: #007bff; border-bottom: 2px solid #007bff; }
+.login-page h2 { color: #dc3545; border-bottom: 2px solid #dc3545; }
 
 table {
   border-collapse: collapse;
@@ -72,10 +75,10 @@ th {
 
 form {
   margin-top: 2rem;
-  background-color: #fff;
+  background-color: #f8f8f8;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 10px;
-  padding: 1rem;
+  padding: 1.5rem;
 }
 
 label {
@@ -83,26 +86,48 @@ label {
   margin-bottom: 0.5rem;
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  display: flex;
+  justify-content: center;
   width: 100%;
+  max-width: 95%;
   padding: 1rem;
-  font-size: 1rem;
+  font-size: 1.1rem;
   border: 1px solid #ccc;
   border-radius: 5px;
+  transition: border-color 0.3s ease;
+  margin-bottom: 1rem;
 }
 
-input[type="submit"] {
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus {
+  border-color: #6f42c1;
+}
+
+button[type="submit"] {
+  display: block;
+  margin: 1rem auto;
   padding: 1rem 2rem;
-  background-color: #6f42c1;
+  background-color: #5c5c5c;
   color: #fff;
   border: none;
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s ease;
+  width: 20%; 
 }
 
-input[type="submit"]:hover {
+button[type="submit"]:hover {
   background-color: #5a32a3;
+}
+
+/* Hover effect on table rows */
+tbody tr:hover {
+  background-color: #f2f2f2;
+  cursor: pointer;
 }
 
 /* Message animation */
@@ -121,58 +146,8 @@ tbody tr {
   animation: fadeInUp 0.5s ease;
 }
 
-
-/* styles.css */
-
-/* ... existing styles ... */
-
-/* Hover effect on table rows */
-tbody tr:hover {
-  background-color: #f2f2f2;
-  cursor: pointer;
-}
-
-/* Improve form styles */
-.animated-form {
-  background-color: #f8f8f8;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  padding: 1.5rem;
-  margin-top: 1.5rem;
-}
-
-input[type="text"] {
-  width: 100%;
-  padding: 1rem;
-  font-size: 1.1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  transition: border-color 0.3s ease;
-}
-
-input[type="text"]:focus {
-  border-color: #6f42c1;
-}
-
-input[type="submit"] {
-  padding: 1rem 2rem;
-  background-color: #6f42c1;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-input[type="submit"]:hover {
-  background-color: #5a32a3;
-}
-
 /* Background animation for header */
 header {
-  background: linear-gradient(135deg, #6f42c1, #007bff);
-  color: #fff;
-  padding: 1rem;
   position: relative;
 }
 
