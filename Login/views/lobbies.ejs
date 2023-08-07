@@ -1,0 +1,37 @@
+<!-- lobbies.ejs -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lobbies</title>
+</head>
+<body>
+  <h1>Lobbies</h1>
+  <% if (lobbies.length > 0) { %>
+    <ul>
+      <% lobbies.forEach(lobby => { %>
+        <li><%= lobby.name %> - <%= lobby.description %></li>
+        <% if (user && lobby.participants.includes(user._id)) { %>
+          <form action="/lobbies/<%= lobby._id %>/leave" method="post">
+            <button type="submit">Leave</button>
+          </form>
+        <% } else { %>
+          <form action="/lobbies/<%= lobby._id %>/join" method="post">
+            <button type="submit">Join</button>
+          </form>
+        <% } %>
+      <% }) %>
+    </ul>
+  <% } else { %>
+    <p>No lobbies available.</p>
+  <% } %>
+  
+  <!-- Form to create a new lobby -->
+  <form action="/lobbies" method="post">
+    <label for="name">Lobby Name:</label>
+    <input type="text" id="name" name="name" required>
+    <label for="description">Description:</label>
+    <input type="text" id="description" name="description" required>
+    <button type="submit">Create Lobby</button>
+  </form>
+</body>
+</html>

@@ -8,7 +8,23 @@ const methodOverride = require('method-override');
 const mongoose = require('mongoose'); 
 const User = require('./models/user.js'); 
 const Message = require('./models/message');
+const Lobby = require('./models/lobby'); 
 
+// const newLobby = new Lobby({
+//   name: 'General Lobby1',
+//   description: 'A general chat room for everyone.',
+//   participants: ['64c90ca5939f52910c9b671a', '64c91769116606a5f6d12ff1', '64c9f8bf4eed0762c6c3cba4'], // Assuming you have references to user documents in user1, user2, user3, etc.
+// });
+
+
+// Save the new lobby to the database
+// newLobby.save()
+//   .then(savedLobby => {
+//     console.log('New lobby saved successfully:', savedLobby);
+//   })
+//   .catch(err => {
+//     console.error('Error saving lobby:', err);
+//   });
 // ... (other route-specific code)
 passport.serializeUser((user, done) => {
     done(null, user.id);
@@ -46,7 +62,8 @@ app.get('/', async (req, res) => {
     try {
       if (req.isAuthenticated()) {
         const messages = await Message.find({});
-        res.render('index.ejs', { name: req.user.name, messages: messages });
+        const lobbies = await Lobby.find({});
+        res.render('index.ejs', { name: req.user.name, messages: messages, lobbies: lobbies  });
       } else {
         res.redirect('/login');
       }
